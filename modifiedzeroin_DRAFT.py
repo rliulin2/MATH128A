@@ -53,6 +53,7 @@ def modifiedZeroin(f, initialInterval, params):
     while iter <= params.maxit:
         if x1 - x0 < root_tol:
             if abs(f(x2)) < func_tol:
+                print("iter", iter) #for optimizing
                 return [x2, info(0)]
             else:
                 return [x2, info(1)]
@@ -60,6 +61,7 @@ def modifiedZeroin(f, initialInterval, params):
         x3 = IQI(f, x0, x1, x2); iterpIter += 1
         try:
             if abs(f(x3)) < func_tol:
+                print("iter", iter) #for optimizing
                 return [x3, info(0)]
         except ValueError:
             pass
@@ -68,8 +70,6 @@ def modifiedZeroin(f, initialInterval, params):
             x0, x1, x2 = bisectionMethod(f, (x0, x1), func_tol, 3)
             if iterpIter == 1:
                 f3 = f(x2)
-
-            #iterpIter = 0
         else:
             if x3 < x2:
                 x0 = x0; x1 = x2; x2 = x3
@@ -81,16 +81,17 @@ def modifiedZeroin(f, initialInterval, params):
 
         if iterpIter > 5 and abs(f(x3)) > abs(f3 / 2):
             x0, x1, x2 = bisectionMethod(f, (x0, x1), func_tol, 3)
-            #iterpIter = 0
 
         iter += 1
 
     if abs(f(x3)) < func_tol:
+        print("iter", iter) #for optimizing
         return [x3, info(0)]
     else:
         return [x3, info(1)]
 
 ###########################
+#test cases for the project
 parameters = params(1e-9, 1e-9, 100)
 def f1(x):
     return math.sqrt(x) - math.cos(x)
